@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 import numpy as np
+from pathlib import Path
 
 
 def read_challenge_text(filepath: str) -> list[list[list[str]]]:
@@ -130,12 +131,34 @@ def mine_count(mines: np.array) -> str:
     return tmp_mine
 
 
-if __name__ == "__main__":
+def process_challenge(in_file: str, out_file: str):
+    """
+    Read the minefields defined in `in_file` and create a solution text in
+    `out_file`.
+    """
+
+    # Delete the out_file if it exists
+    Path(out_file).unlink(missing_ok=True)
+
     # String representations of the minefields
-    raw_minefields = read_challenge_text("./data/sample0.txt")
+    raw_minefields = read_challenge_text(in_file)
 
-    # Convert to numpy array of bools
-    mine_bool = parse_minefield(raw_minefields[0])
+    for i, mine_raw in enumerate(raw_minefields):
+        # Convert to numpy array of bools
+        mine_bool = parse_minefield(mine_raw)
 
-    # Count the number of adjacent mines
-    count_map = mine_count(mine_bool)
+        # Count the number of adjacent mines
+        count_map = mine_count(mine_bool)
+
+        with open(out_file, "a") as f_ptr:
+            print(f"Field #{i+1}:", file=f_ptr)
+            print(count_map, file=f_ptr)
+
+
+if __name__ == "__main__":
+    process_challenge("./data/mine0.txt", "./outputs/mine0.txt")
+    process_challenge("./data/mine1.txt", "./outputs/mine1.txt")
+    process_challenge("./data/mine2.txt", "./outputs/mine2.txt")
+    process_challenge("./data/mine3.txt", "./outputs/mine3.txt")
+    process_challenge("./data/mine4.txt", "./outputs/mine4.txt")
+    process_challenge("./data/sample0.txt", "./outputs/sample0.txt")
