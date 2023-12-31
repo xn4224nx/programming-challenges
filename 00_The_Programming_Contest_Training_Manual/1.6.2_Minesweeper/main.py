@@ -48,7 +48,86 @@ def mine_count(mines: np.array) -> str:
     Determine the number of adjacent mines for each empty square and produce an
     string representation of the minefield with that infomation.
     """
-    pass
+
+    tmp_mine = ""
+
+    for i in range(mines.shape[0]):
+        for j in range(mines.shape[1]):
+            # Leave mines as none
+            if mines[i][j]:
+                tmp_mine += "*"
+                continue
+
+            # Otherwise count the number of adjacent mines
+            adj_mines = 0
+
+            if i == 0:
+                if j == 0:
+                    adj_mines += mines[i][j + 1]
+                    adj_mines += mines[i + 1][j + 1]
+                    adj_mines += mines[i + 1][j]
+
+                elif j == mines.shape[1] - 1:
+                    adj_mines += mines[i][j - 1]
+                    adj_mines += mines[i + 1][j - 1]
+                    adj_mines += mines[i + 1][j]
+
+                else:
+                    adj_mines += mines[i][j - 1]
+                    adj_mines += mines[i][j + 1]
+                    adj_mines += mines[i + 1][j - 1]
+                    adj_mines += mines[i + 1][j + 1]
+                    adj_mines += mines[i + 1][j]
+
+            elif i == mines.shape[0] - 1:
+                if j == 0:
+                    adj_mines += mines[i - 1][j]
+                    adj_mines += mines[i - 1][j + 1]
+                    adj_mines += mines[i][j + 1]
+
+                elif j == mines.shape[1] - 1:
+                    adj_mines += mines[i - 1][j - 1]
+                    adj_mines += mines[i - 1][j]
+                    adj_mines += mines[i][j - 1]
+
+                else:
+                    adj_mines += mines[i - 1][j - 1]
+                    adj_mines += mines[i - 1][j]
+                    adj_mines += mines[i - 1][j + 1]
+
+                    adj_mines += mines[i][j - 1]
+                    adj_mines += mines[i][j + 1]
+
+            else:
+                if j == 0:
+                    adj_mines += mines[i - 1][j]
+                    adj_mines += mines[i - 1][j + 1]
+                    adj_mines += mines[i][j + 1]
+                    adj_mines += mines[i + 1][j + 1]
+                    adj_mines += mines[i + 1][j]
+
+                elif j == mines.shape[1] - 1:
+                    adj_mines += mines[i - 1][j - 1]
+                    adj_mines += mines[i - 1][j]
+                    adj_mines += mines[i][j - 1]
+                    adj_mines += mines[i + 1][j - 1]
+                    adj_mines += mines[i + 1][j]
+
+                else:
+                    adj_mines += mines[i - 1][j - 1]
+                    adj_mines += mines[i - 1][j]
+                    adj_mines += mines[i - 1][j + 1]
+
+                    adj_mines += mines[i][j - 1]
+                    adj_mines += mines[i][j + 1]
+
+                    adj_mines += mines[i + 1][j - 1]
+                    adj_mines += mines[i + 1][j + 1]
+                    adj_mines += mines[i + 1][j]
+
+            tmp_mine += str(adj_mines)
+        tmp_mine += "\n"
+    return tmp_mine
 
 
 if __name__ == "__main__":
@@ -56,4 +135,7 @@ if __name__ == "__main__":
     raw_minefields = read_challenge_text("./data/sample0.txt")
 
     # Convert to numpy array of bools
-    parse_minefield(raw_minefields[0])
+    mine_bool = parse_minefield(raw_minefields[0])
+
+    # Count the number of adjacent mines
+    count_map = mine_count(mine_bool)
