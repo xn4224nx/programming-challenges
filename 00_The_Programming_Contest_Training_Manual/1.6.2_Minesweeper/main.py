@@ -37,7 +37,10 @@ def parse_minefield(minefield: list[list[str]]) -> np.array:
     """
     Convert a representation of a minefield to a numpy boolean array.
     """
-    pass
+    tmp_mine = np.array(minefield)
+    bool_mine = np.where(tmp_mine == "*", True, False)
+
+    return bool_mine
 
 
 def mine_count(mines: np.array) -> str:
@@ -52,4 +55,5 @@ if __name__ == "__main__":
     # String representations of the minefields
     raw_minefields = read_challenge_text("./data/sample0.txt")
 
-    print(raw_minefields)
+    # Convert to numpy array of bools
+    parse_minefield(raw_minefields[0])
