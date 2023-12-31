@@ -30,8 +30,8 @@ def create_sample_file(num_fields: int, file_path: str):
 
     for _ in range(num_fields):
         # Generate the features of the minefield
-        height = random.randint(1, 100)
-        width = random.randint(1, 100)
+        height = random.randint(3, 100)
+        width = random.randint(3, 100)
         prob_of_mine = random.betavariate(2, 8)
 
         # Create the minefield
