@@ -40,7 +40,7 @@ fn parse_trip_costs(filepath: &str) -> Vec<Vec<u32>> {
 
 fn min_exchange(costs: Vec<u32>) -> u32 {
     /* Calculate the average ammount spent of the trip. */
-    let favg: f64 = costs.iter().sum::<u32>() as f64) / (costs.len() as f64);
+    let favg: f64 = (costs.iter().sum::<u32>() as f64) / (costs.len() as f64);
     
     /* Round to u32 */
     let avg = favg.round() as u32;
