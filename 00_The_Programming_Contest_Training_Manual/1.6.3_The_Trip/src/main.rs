@@ -13,6 +13,7 @@ fn parse_trip_costs(filepath: &str) -> Vec<Vec<u32>> {
     for line in contents.lines() {
         /* The file ends with a "0" */
         if line == "0" {
+            all_costs.push(costs.clone());
             break;
 
         /* Detect the start of a new trip. */
