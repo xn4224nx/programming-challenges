@@ -68,7 +68,7 @@ fn create_output(in_file: &str, out_file: &str) {
     for raw_cost in all_tripcosts {
         /* Calculate the minimum exchange cost. */
         let raw_exc = min_exchange(raw_cost);
-        let result = format!("£{}.{}\n", raw_exc/100, raw_exc%100);
+        let result = format!("£{}.{:02}\n", raw_exc/100, raw_exc%100);
 
         println!("{}", result);
 
