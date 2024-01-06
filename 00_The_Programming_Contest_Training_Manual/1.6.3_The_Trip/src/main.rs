@@ -41,7 +41,7 @@ fn parse_trip_costs(filepath: &str) -> Vec<Vec<u32>> {
 fn min_exchange(costs: Vec<u32>) -> u32 {
     /* Calculate the average ammount spent of the trip. */
     let favg: f64 = (costs.iter().sum::<u32>() as f64) / (costs.len() as f64);
-    
+
     /* Round to u32 */
     let avg = favg.round() as u32;
 
@@ -68,9 +68,7 @@ fn create_output(in_file: &str, out_file: &str) {
     for raw_cost in all_tripcosts {
         /* Calculate the minimum exchange cost. */
         let raw_exc = min_exchange(raw_cost);
-        let result = format!("£{}.{:02}\n", raw_exc/100, raw_exc%100);
-
-        println!("{}", result);
+        let result = format!("£{}.{:02}\n", raw_exc / 100, raw_exc % 100);
 
         /* Output to a text file. */
         buffer.write(result.as_bytes()).unwrap();
@@ -78,5 +76,7 @@ fn create_output(in_file: &str, out_file: &str) {
 }
 
 fn main() {
-    create_output("./data/ques_00.txt", "./data/test_00.txt");
+    create_output("./data/ques_00.txt", "./data/atmp_00.txt");
+    create_output("./data/ques_01.txt", "./data/atmp_01.txt");
+    create_output("./data/ques_02.txt", "./data/atmp_02.txt");
 }
