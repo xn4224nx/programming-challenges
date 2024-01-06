@@ -1,4 +1,5 @@
 use std::fs;
+use std::cmp;
 
 fn parse_trip_costs(filepath: &str) -> Vec<Vec<u32>> {
 
@@ -33,12 +34,35 @@ fn parse_trip_costs(filepath: &str) -> Vec<Vec<u32>> {
             costs.push(raw_cost);
         }
     }
-
     return all_costs;
 }
 
+
+fn min_exchange(costs: Vec<u32>) -> u32 {
+    
+    /* Calculate the average ammount spent of the trip. */
+    let avg: u32 = costs.iter().sum::<u32>() / (costs.len() as u32);
+    
+    let mut sum_low: u32 = 0;
+    let mut sum_hig: u32 = 0;
+    
+    /* Calculate the sum of the amount above and below the average. */
+    for ind_cst in costs {
+        if ind_cst > avg {
+            sum_hig += ind_cst - avg;
+        } else {
+            sum_low += avg - ind_cst;
+        }
+    }
+    
+    return cmp::min(sum_low, sum_hig);
+}
+
+
 fn main() {
     let all_tripcosts = parse_trip_costs("./data/ques_00.txt");
-
-    println!("{:?}", all_tripcosts);
+    
+    for raw_cost in all_tripcosts {
+        println!("{}", min_exchange(raw_cost));
+    }
 }
