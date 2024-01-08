@@ -18,36 +18,17 @@ MAX_PRINT_NUM = 99999999
 MAX_SIZE = 10
 
 
-def generate_outputs(outdir: str, num_files: int, num_per_file: int):
-    """
-    Create `num_file` of output files that are inputs to the challenge.
-    """
-
-    base_dir = Path(outdir)
-    base_dir.mkdir(parents=True, exist_ok=True)
-
-    for file_num in range(num_files):
-        outfile = Path(base_dir, f"comp_input_{file_num:02}.txt")
-
-        with outfile.open("a") as fp:
-            for _ in range(num_per_file):
-                size = random.randint(1, MAX_SIZE)
-                print_n = random.randint(0, MAX_PRINT_NUM)
-
-                fp.write(f"{size} {print_n}\n")
-
-
 def large_print_int(num: int, size: int) -> str:
     """
     Create a string representation of an integer number.
     """
-    
+
     if size <= 0 or size > MAX_SIZE:
         raise Exception(f"Unsupported size: {size}")
-    
+
     elif num < 0 or num > MAX_PRINT_NUM:
         raise Exception(f"Number cannot be printed: {num}")
-    
+
     num = str(num)
 
     top = ""
@@ -59,7 +40,7 @@ def large_print_int(num: int, size: int) -> str:
     for char in num:
         # Create the top string
         if char in ["1", "4"]:
-            top += (size+2) * " "
+            top += (size + 2) * " "
         else:
             top += " " + "-" * size + " "
 
@@ -74,7 +55,7 @@ def large_print_int(num: int, size: int) -> str:
 
         # Create the half way string
         if char in ["1", "7", "0"]:
-            half += (size+2) * " "
+            half += (size + 2) * " "
         else:
             half += " " + size * "-" + " "
 
@@ -89,7 +70,7 @@ def large_print_int(num: int, size: int) -> str:
 
         # Create the bottom string
         if char in ["1", "4", "7"]:
-            low += (size+2) * " "
+            low += (size + 2) * " "
         else:
             low += " " + size * "-" + " "
 
@@ -111,6 +92,28 @@ def large_print_int(num: int, size: int) -> str:
     return top + "".join(mid1) + half + "".join(mid2) + low
 
 
+def generate_outputs(outdir: str, num_files: int, num_per_file: int):
+    """
+    Create `num_file` of output files that are inputs to the challenge.
+    """
+
+    base_dir = Path(outdir)
+    base_dir.mkdir(parents=True, exist_ok=True)
+
+    for file_num in range(num_files):
+        qfile = Path(base_dir, f"comp_input_{file_num:02}.txt")
+        afile = Path(base_dir, f"comp_output_{file_num:02}.txt")
+
+        for _ in range(num_per_file):
+            size = random.randint(1, MAX_SIZE)
+            print_n = random.randint(0, MAX_PRINT_NUM)
+
+            with qfile.open("a") as fp:
+                fp.write(f"{size} {print_n}\n")
+
+            with afile.open("a") as fp:
+                fp.write(f"{large_print_int(print_n, size)}\n")
+
+
 if __name__ == "__main__":
     generate_outputs("data/", 3, 3)
-    print(large_print_int(1234567890, 5))
