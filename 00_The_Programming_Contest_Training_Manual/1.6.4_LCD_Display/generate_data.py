@@ -41,6 +41,13 @@ def large_print_int(num: int, size: int) -> str:
     """
     Create a string representation of an integer number.
     """
+    
+    if size <= 0 or size > MAX_SIZE:
+        raise Exception(f"Unsupported size: {size}")
+    
+    elif num < 0 or num > MAX_PRINT_NUM:
+        raise Exception(f"Number cannot be printed: {num}")
+    
     num = str(num)
 
     top = ""
