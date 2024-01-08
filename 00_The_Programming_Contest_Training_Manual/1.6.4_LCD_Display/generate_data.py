@@ -12,6 +12,7 @@ then followed by the digits that need to be displayed.
 
 import random
 from pathlib import Path
+import sys
 
 
 MAX_PRINT_NUM = 99999999
@@ -116,4 +117,9 @@ def generate_outputs(outdir: str, num_files: int, num_per_file: int):
 
 
 if __name__ == "__main__":
-    generate_outputs("data/", 3, 3)
+    if len(sys.argv) != 3:
+        raise Exception(
+            "Two arguments are needed: num of files & num of challenges per files."
+        )
+
+    generate_outputs("data", int(sys.argv[1]), int(sys.argv[2]))
