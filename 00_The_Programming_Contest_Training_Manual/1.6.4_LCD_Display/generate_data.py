@@ -37,71 +37,73 @@ def generate_outputs(outdir: str, num_files: int, num_per_file: int):
                 fp.write(f"{size} {print_n}\n")
 
 
-def large_print_int(num: int) -> str:
+def large_print_int(num: int, size: int) -> str:
     """
     Create a string representation of an integer number.
     """
     num = str(num)
 
     top = ""
-    mid1 = ""
+    mid1 = [""] * size
     half = ""
-    mid2 = ""
+    mid2 = [""] * size
     low = ""
 
     for char in num:
         # Create the top string
         if char in ["1", "4"]:
-            top += "   "
+            top += (size+2) * " "
         else:
-            top += "---"
+            top += " " + "-" * size + " "
 
         # Create the first middle string
-        if char in ["1", "2", "3", "7"]:
-            mid1 += "  |"
-        elif char in ["5", "6"]:
-            mid1 += "|  "
-        else:
-            mid1 += "| |"
+        for i in range(len(mid1)):
+            if char in ["1", "2", "3", "7"]:
+                mid1[i] += " " + size * " " + "|"
+            elif char in ["5", "6"]:
+                mid1[i] += "|" + size * " " + " "
+            else:
+                mid1[i] += "|" + size * " " + "|"
 
         # Create the half way string
         if char in ["1", "7", "0"]:
-            half += "   "
+            half += (size+2) * " "
         else:
-            half += "---"
+            half += " " + size * "-" + " "
 
         # Create the second middle string
-        if char in ["0", "8", "6"]:
-            mid2 += "| |"
-        elif char in ["2"]:
-            mid2 += "|  "
-        else:
-            mid2 += "  |"
+        for j in range(len(mid2)):
+            if char in ["0", "8", "6"]:
+                mid2[j] += "|" + size * " " + "|"
+            elif char in ["2"]:
+                mid2[j] += "|" + size * " " + " "
+            else:
+                mid2[j] += " " + size * " " + "|"
 
         # Create the bottom string
         if char in ["1", "4", "7"]:
-            low += "   "
+            low += (size+2) * " "
         else:
-            low += "---"
+            low += " " + size * "-" + " "
 
         # Add the space between numbers
         top += "  "
-        mid1 += "  "
+        mid1 = [x + "  " for x in mid1]
         half += "  "
-        mid2 += "  "
+        mid2 = [x + "  " for x in mid2]
         low += "  "
 
     # Finish off the strings with a new line
     top += "\n"
-    mid1 += "\n"
+    mid1 = [x + "\n" for x in mid1]
     half += "\n"
-    mid2 += "\n"
+    mid2 = [x + "\n" for x in mid2]
     low += "\n"
 
     # Combine all the strings
-    return top + mid1 + half + mid2 + low
+    return top + "".join(mid1) + half + "".join(mid2) + low
 
 
 if __name__ == "__main__":
     generate_outputs("data/", 3, 3)
-    print(large_print_int(1234567890))
+    print(large_print_int(1234567890, 5))
