@@ -36,14 +36,26 @@ class GraphEditor:
 		self.image[height_p, width_p] = colour
 		self.instructions.append(f"L {width_p} {height_p} {colour}")
 			
-	def vert_paint(self):
-		pass
+	def vert_paint(self, width_p, height_0, height_1, colour):
+		"""
+		Paint a vertical column in the image a particular colour.
+		"""
+		self.image[height_0:height_1 + 1, width_p] = colour
+		self.instructions.append(f"V {width_p} {height_0} {height_1} {colour}")
 		
-	def horiz_paint(self):
-		pass
+	def horiz_paint(self, width_0, width_1, height_p, colour):
+		"""
+		Paint a horizonal row in the image a particular colour.
+		"""
+		self.image[height_p, width_0:width_1 + 1] = colour
+		self.instructions.append(f"H {width_0} {width_1} {height_p} {colour}")
 		
-	def rect_paint(self);
-		pass
+	def rect_paint(self, width_0, width_1, height_0, height_1, colour);
+		"""
+		Paint a rectangle in the image a particular colour.
+		"""
+		self.image[height_0:height_1 + 1, width_0:width_1 + 1] = colour
+		self.instructions.append(f"K {width_0} {width_1} {height_0} {height_1} {colour}")
 		
 	def fill(self):
 		pass
