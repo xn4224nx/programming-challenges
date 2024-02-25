@@ -23,12 +23,19 @@ class GraphEditor:
 		self.instructions = [f"I {str(self.width_m)} {str(self.height_n)}"]
 		
 	def clear(self):
+		"""
+		Wipe the image and set every value in the array to white.
+		"""
 		self.image.fill(0)
 		self.instructions.append("C")
 		
-	def paint_pixel(self):
-		pass
-		
+	def paint_pixel(self, width_p, height_p, colour):
+		"""
+		Colour the pixel indicated by the coordinate to the given colour.
+		"""
+		self.image[height_p, width_p] = colour
+		self.instructions.append(f"L {width_p} {height_p} {colour}")
+			
 	def vert_paint(self):
 		pass
 		
