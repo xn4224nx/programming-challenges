@@ -8,6 +8,7 @@ output they would create.
 """
 
 import numpy as np
+import random
 
 MAX_HEIGHT = 250
 
@@ -126,4 +127,21 @@ class GraphEditor:
 
 
 if __name__ == "__main__":
-	img0 = GraphEditor(36, 36)
+	
+	# Generate a set number of instruction files and their outputs
+	for i in range(100):
+		
+		# Generate the image size
+		width = random.randrange(1, MAX_HEIGHT + 1)
+		height = random.randrange(1, width + 1)
+		
+		# Generate the image command
+		img = GraphEditor(width, height)
+		
+		# A random number of functions
+		num_commands = randrange(3, 13)
+		
+		# Save the image before exit
+		
+		# Terminate the session
+		
