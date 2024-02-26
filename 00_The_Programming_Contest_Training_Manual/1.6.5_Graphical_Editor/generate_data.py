@@ -125,6 +125,17 @@ class GraphEditor:
 		
 		return adj_pixels
 
+	def save_inst(self, filepath: str):
+		"""
+		Save a text file that contains all the instructions that were
+		used by the class.
+		"""
+		
+		all_commands = "\n".join(self.instructions)
+		
+		with open(filepath, "w") as fp:
+			fp.write(all_commands)
+		
 
 if __name__ == "__main__":
 	
@@ -141,7 +152,35 @@ if __name__ == "__main__":
 		# A random number of functions
 		num_commands = randrange(3, 13)
 		
+		for _ in range(num_commands):
+			
+			# Select a random function
+			command = random.randrange(6)
+			
+			if command == 0:
+				img.clear()
+			
+			elif command == 1:
+				img.paint_pixel()
+			
+			elif command == 2:
+				img.vert_paint()
+			
+			elif command == 3:
+				img.horiz_paint()
+			
+			elif command == 4:
+				img.rect_paint()
+			
+			elif command == 5:
+				img.fill()
+			
 		# Save the image before exit
+		img.save(f"data/image_{str(i):02}.bmp")
 		
 		# Terminate the session
+		img.exit_sess()
+		
+		# Save the instruction file
+		img.save_inst(f"data/instruction_{str(i):02}.txt")
 		
