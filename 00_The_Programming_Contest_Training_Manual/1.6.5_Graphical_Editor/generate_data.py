@@ -71,7 +71,7 @@ class GraphEditor:
 		
 		orig_colour = self.image[height_p, width_p]
 		adj_pixels = self.adj_pixels(width_p, height_p)
-		
+
 		while adj_pixels:
 			
 			new_adj_pixels = []
@@ -79,13 +79,13 @@ class GraphEditor:
 			for pixel in adj_pixels:
 				
 				# Check if the pixel is the original colour
-				if self.image[pixel[0], pixel[1]].all() == orig_colour:
+				if self.image[pixel[1], pixel[0]] == orig_colour:
 					
 					# Change the pixels colour to the new colour
-					self.image[pixel[0], pixel[1]] = colour
+					self.image[pixel[1], pixel[0]] = colour
 					
 					# Save the new adjacent pixels for this pixel
-					new_adj_pixels.append(self.adj_pixels(pixel[0], pixel[1]))
+					new_adj_pixels += self.adj_pixels(pixel[0], pixel[1])
 					
 			adj_pixels = new_adj_pixels
 		
@@ -116,17 +116,17 @@ class GraphEditor:
 			
 		# Vertical
 		if height_p > 0:
-			adj_pixels.append((height_p + 1, width_p))
+			adj_pixels.append((width_p, height_p - 1))
 		
 		if height_p < self.height_n - 1:
-			adj_pixels.append((height_p - 1, width_p))
+			adj_pixels.append((width_p, height_p + 1))
 
 		# Horizontal
 		if width_p > 0:
-			adj_pixels.append((height_p, width_p + 1))
+			adj_pixels.append((width_p - 1, height_p))
 		
 		if width_p < self.width_m - 1:
-			adj_pixels.append((height_p, width_p - 1))
+			adj_pixels.append((width_p + 1, height_p))
 		
 		return adj_pixels
 
@@ -165,11 +165,11 @@ class GraphEditor:
 if __name__ == "__main__":
 	
 	# Generate a set number of instruction files and their outputs
-	for i in range(100):
+	for idx in range(100):
 		
 		# Generate the image size
-		width = random.randrange(1, MAX_HEIGHT + 1)
-		height = random.randrange(1, width + 1)
+		width = random.randrange(10, MAX_HEIGHT + 1)
+		height = random.randrange(10, width + 1)
 		
 		# Generate the image command
 		img = GraphEditor(width, height)
@@ -202,14 +202,15 @@ if __name__ == "__main__":
 				img.rect_paint(rrect[0], rrect[1], rrect[2], rrect[3], rcolour)
 			
 			elif command == 5:
-				img.fill(rrect[0], rrect[1],rcolour)
+				img.fill(rrect[0], rrect[2], rcolour)
 			
 		# Save the image before exit
-		img.save(f"data/image_{str(i):02}.bmp")
+		img.save(f"data/image_{idx:02d}.bmp")
 		
 		# Terminate the session
 		img.exit_sess()
 		
 		# Save the instruction file
-		img.save_inst(f"data/instruction_{str(i):02}.txt")
-		
+		img.save_inst(f"data/instruction_{idx:02d}.txt")
+				
+		print(f"Image & Instruction set {idx:02d} created.")
