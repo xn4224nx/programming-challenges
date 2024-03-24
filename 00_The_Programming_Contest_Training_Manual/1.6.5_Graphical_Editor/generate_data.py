@@ -143,7 +143,21 @@ class GraphEditor:
 		"""
 		return random.randrange(MAX_COLOUR)
 
+	def rnd_rect(self) -> (int, int, int, int):
+		"""
+		Generate the height and width values for two coordinate points
+		that define a rectangle that fits completely in the image.
+		"""
+		
+		width_0 = random.randrange(self.width_m - 1)
+		width_1 = random.randrange(width_0, self.width_m)
+		
+		height_0 = random.randrange(self.height_n - 1)
+		height_1 = random.randrange(height_0, self.height_n)
+		
+		return (width_0, width_1, height_0, height_1)
 
+		
 if __name__ == "__main__":
 	
 	# Generate a set number of instruction files and their outputs
@@ -164,23 +178,27 @@ if __name__ == "__main__":
 			# Select a random function
 			command = random.randrange(6)
 			
+			# Generate a colour & rectangle for use in the command
+			rcolour = img.rnd_colour()
+			rrect = img.rnd_rect()
+			
 			if command == 0:
 				img.clear()
 			
 			elif command == 1:
-				img.paint_pixel()
+				img.paint_pixel(rrect[0], rrect[2], rcolour)
 			
 			elif command == 2:
-				img.vert_paint()
+				img.vert_paint(rrect[0], rrect[2], rrect[3], rcolour)
 			
 			elif command == 3:
-				img.horiz_paint()
+				img.horiz_paint(rrect[0], rrect[1], rrect[2], rcolour)
 			
 			elif command == 4:
-				img.rect_paint()
+				img.rect_paint(rrect[0], rrect[1], rrect[2], rrect[3], rcolour)
 			
 			elif command == 5:
-				img.fill()
+				img.fill(rrect[0], rrect[1],rcolour)
 			
 		# Save the image before exit
 		img.save(f"data/image_{str(i):02}.bmp")
