@@ -11,6 +11,7 @@ import numpy as np
 import random
 
 MAX_HEIGHT = 250
+MAX_COLOUR = 256*256*256
 
 class GraphEditor:
 	def __init__(self, width, height):
@@ -135,7 +136,13 @@ class GraphEditor:
 		
 		with open(filepath, "w") as fp:
 			fp.write(all_commands)
-		
+	
+	def rnd_colour(self) -> int:
+		"""
+		Return a random colour value that is compatible with the editor.
+		"""
+		return random.randrange(MAX_COLOUR)
+
 
 if __name__ == "__main__":
 	
