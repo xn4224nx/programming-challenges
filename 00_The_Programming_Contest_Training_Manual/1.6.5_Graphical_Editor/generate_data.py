@@ -18,7 +18,7 @@ class GraphEditor:
 		self.height_n = height
 		
 		# Create the blank image
-		self.image = np.zero((self.height_n, self.width_m))
+		self.image = np.zeros((self.height_n, self.width_m))
 		
 		# Create the set of instructions that are fed to the editor
 		self.instructions = [f"I {str(self.width_m)} {str(self.height_n)}"]
@@ -51,7 +51,7 @@ class GraphEditor:
 		self.image[height_p, width_0:width_1 + 1] = colour
 		self.instructions.append(f"H {width_0} {width_1} {height_p} {colour}")
 		
-	def rect_paint(self, width_0, width_1, height_0, height_1, colour);
+	def rect_paint(self, width_0, width_1, height_0, height_1, colour):
 		"""
 		Paint a rectangle in the image a particular colour.
 		"""
@@ -150,7 +150,7 @@ if __name__ == "__main__":
 		img = GraphEditor(width, height)
 		
 		# A random number of functions
-		num_commands = randrange(3, 13)
+		num_commands = random.randrange(3, 13)
 		
 		for _ in range(num_commands):
 			
