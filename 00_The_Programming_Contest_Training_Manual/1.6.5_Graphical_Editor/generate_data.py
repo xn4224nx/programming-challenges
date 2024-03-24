@@ -79,13 +79,13 @@ class GraphEditor:
 			for pixel in adj_pixels:
 				
 				# Check if the pixel is the original colour
-				if self.image[pixel] == orig_colour:
+				if self.image[pixel[0], pixel[1]].all() == orig_colour:
 					
 					# Change the pixels colour to the new colour
-					self.image[pixel] = colour
+					self.image[pixel[0], pixel[1]] = colour
 					
 					# Save the new adjacent pixels for this pixel
-					new_adj_pixels.append(self.adj_pixels(pixel))
+					new_adj_pixels.append(self.adj_pixels(pixel[0], pixel[1]))
 					
 			adj_pixels = new_adj_pixels
 		
@@ -96,7 +96,11 @@ class GraphEditor:
 		Save the file
 		"""
 		self.instructions.append(f"S {filename}")
-		
+		np.savetxt(filename, self.image, fmt='%7d', 
+					delimiter=' ', newline='\n', 
+					header='', footer='', 
+					comments='# ', encoding=None)
+			
 	def exit_sess(self):
 		"""
 		End the session
