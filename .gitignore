@@ -149,3 +149,6 @@ dmypy.json
 
 # Custom for this project
 data/
+
+# Kate temp files
+.kate-swp
